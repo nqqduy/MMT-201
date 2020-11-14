@@ -1,3 +1,4 @@
+# Quoc Duy
 from tkinter import *
 import tkinter.messagebox
 from PIL import Image, ImageTk
@@ -47,10 +48,6 @@ class Client:
 	def createWidgets(self): # tạo giao diện
 		"""Build GUI."""
 		# Create Setup button
-		self.setup = Button(self.master, width=15, padx=3, pady=3)
-		self.setup["text"] = "Setup"
-		self.setup["command"] = self.setupMovie
-		self.setup.grid(row=1, column=0, padx=15, pady=2)
 		
 		# Create Play button		
 		self.start = Button(self.master, width=15, padx=3, pady=3)
@@ -72,7 +69,7 @@ class Client:
 		
 		# Create a label to display the movie
 		self.label = Label(self.master, height=19)
-		self.label.grid(row=0, column=0, columnspan=4, sticky=W+E+N+S, padx=5, pady=5) 
+		self.label.grid(row=0, column=0, columnspan=4, sticky=W+E+N+S, padx=3, pady=3) 
 		
 		
 		# create a button SESION
@@ -170,6 +167,7 @@ class Client:
 		self.rtspSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		try:
 			self.rtspSocket.connect((self.serverAddr, self.serverPort))
+			self.sendRtspRequest(self.SETUP)
 		except:
 			tkMessageBox.showwarning('Connection Failed', 'Connection to \'%s\' failed.' %self.serverAddr)
 	
@@ -319,7 +317,7 @@ class Client:
 						self.teardownAcked = 1 
 					elif self.requestSent == self.DESCRIBE: 
 						self.state = self.READY
-						print("\nData received")
+						print("\nData sent of DESCRIBE-request")
 						print(lines[3:])
 
 						self.playEvent.set()
